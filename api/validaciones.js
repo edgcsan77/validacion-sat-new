@@ -81,7 +81,7 @@ export default async function handler(req, res) {
   // =========================
   try {
     const rawUrl =
-      `https://raw.githubusercontent.com/edgcsan77/validacion-sat/main/public/data/personas/${encodeURIComponent(d3Raw)}.json`;
+      `https://raw.githubusercontent.com/edgcsan77/validacion-sat-new/main/public/data/personas/${encodeURIComponent(d3Raw)}.json`;
 
     const r = await fetch(`${rawUrl}?ts=${Date.now()}`, { cache: "no-store" });
 
