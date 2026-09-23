@@ -72,7 +72,7 @@
 
   async function fetchPersona() {
     // ✅ 1) archivo individual en GitHub (siempre actualizado)
-    const direct = `https://raw.githubusercontent.com/edgcsan77/validacion-sat/main/public/data/personas/${encodeURIComponent(D3)}.json`;
+    const direct = `https://raw.githubusercontent.com/edgcsan77/validacion-sat-new/main/public/data/personas/${encodeURIComponent(D3)}.json`;
     let r = await fetch(`${direct}?ts=${Date.now()}`, { cache: "no-store" });
     if (r.ok) return await r.json();
 
