@@ -1,0 +1,257 @@
+
+/* ========== FUENTE GLOBAL ========== */
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  background: #f8f7f6;
+  color: #4a4a4a;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* RESET */
+* { box-sizing: border-box; }
+
+/* ===== HEADER SAT LOGOS PEGADO ARRIBA SIN LÍNEA ===== */
+.sat-header {
+  width: 100%;
+  background: #f8f7f6;
+  padding: 0;
+  margin: 0 0 46px 0; /* menos espacio que antes para parecer más al SAT */
+  text-align: center;
+  border: none;
+}
+
+.sat-header img {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 335px; /* en PC se ve más ancho, parecido */
+  height: auto;
+}
+
+/* tu inner ya hace el look; solo lo hacemos inline-block
+   para que el ancho lo determine el texto */
+.sat-card-inner{
+  display: inline-block;        /* ← ayuda a “abrazar” texto */
+  background: #c0a37b;
+  border-radius: 8px;
+
+  padding: 10px 12px;
+  padding-left: 48px;           /* tu sangría */
+  font-size: 16px;
+  font-weight: 600;
+  color: #2f2f2f;
+  line-height: 1.15;
+  text-align: left;
+
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+  -webkit-text-stroke: 0.25px rgba(0,0,0,0.20);
+}
+
+/* ========== CONTENEDOR GENERAL ========== */
+.page-wrapper {
+  width: 100%;
+  max-width: none;
+  margin: 8px 0;
+  padding: 0 16px;
+}
+
+/* centra un elemento inline-block */
+.sat-card-wrap{
+  text-align:  left;
+  margin: 0 0 34px 14px; /* espacio con el panel */
+}
+
+/* tarjeta: se ajusta al texto */
+.sat-card{
+  display: inline-block;        /* ← clave: ancho = contenido */
+  max-width: 98%;              /* para que no se rompa en móvil */
+  background: linear-gradient(#f8f7f6, #f0ece4);
+  border: 1px solid #b38e5d;
+  border-radius: 6px;
+  padding: 20px;                /* marco exterior */
+  box-shadow: 0 3px 3px rgba(179, 142, 93, 0.8);
+}
+
+/* ====== PANELES ESTILO SAT REAL ====== */
+.panel{
+  width: 100%;                  /* ← full width */
+  max-width: none;              /* ← quita límite */
+  margin: 0 0 14px 0;           /* ← ya no auto */
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 3px 3px rgba(179, 142, 93, 0.8);
+}
+
+.panel-header {
+  border: 1px solid rgb(179, 142, 93);
+  border-bottom: none;
+  padding: 6px 15px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #3e3e3e;
+  text-shadow: 0 0 0 #ffffff;
+
+  background: rgba(179, 142, 93, 0.05);
+  background-image: linear-gradient(
+    rgba(179, 142, 93, 0.06),
+    rgb(179, 142, 93)
+  );
+}
+
+.panel-body {
+  border: 1px solid rgb(179, 142, 93);
+  border-top: none;
+  padding: 10px 35px 31px 35px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  color: #333333;
+
+  background: #f9f9f9;
+  background-image: linear-gradient(
+    #f9f9f9,
+    rgba(179, 142, 93, .15)
+  );
+}
+
+/* para que “Datos Generales” se vea como el SAT (menos alto) */
+.sat-body-tight{
+  padding: 12px 0px 42px 0px;
+}
+
+/* ========== TABLA DE DATOS ========== */
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  table-layout: fixed;
+}
+
+table.data-table td {
+  padding: 2px 4px;
+  vertical-align: top;
+}
+
+/* Columna etiquetas */
+table.data-table tr td.label {
+  width: 190px;
+  font-weight: 550;
+  text-align: right;
+  padding-right: 10px;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+}
+
+/* Columna valores */
+table.data-table tr td.value {
+  color: #555555;
+  font-weight: 400;
+  text-align: left;
+  width: auto;
+}
+
+/* Negritas fuertes del lado derecho */
+.strong-right { font-weight: 550; }
+
+/* ===== Cadena original (wrap bonito como SAT) ===== */
+.sat-mono{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 13px;
+  color: #2b2b2b;
+}
+
+.sat-wrap{
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  line-height: 1.20;
+}
+
+/* separa un poquito la fila larga */
+.sat-row-top td{
+  padding-top: 8px;
+}
+
+/* ========== AJUSTES PARA MÓVIL / VENTANA ANGOSTA ========== */
+@media (max-width: 800px) {
+  body { font-size: 15.2px; }
+
+  .sat-card{
+    font-size: 15.2px;
+    padding: 16px 14px;
+  }
+
+  .panel-header,
+  table.data-table {
+    font-size: 15.2px;
+  }
+
+  .panel-body,
+  .sat-body-tight {
+    padding: 10px 14px 16px 14px;
+  }
+
+  table.data-table tr td.label {
+    width: 200px;
+    padding-right: 8px;
+    white-space: normal;
+  }
+}
+
+/* ===== AJUSTE REAL SAT PARA CELULAR (TU MISMO) ===== */
+@media (max-width: 768px) {
+
+  body { font-size: 14.5px; padding-bottom: 50px; }
+  .page-wrapper { padding: 0 14px; }
+
+  .sat-header { margin-bottom: 50px; }
+  .sat-header img { max-width: 330px; }
+
+  .sat-card-inner { 
+    padding: 19px 26px; 
+    text-indent: 18px;
+  }
+
+  table.data-table{
+    width: 100%;
+    table-layout: fixed;
+    font-size: 14.5px;
+    border-collapse: collapse;
+  }
+
+  table.data-table td{
+    padding: 6px 6px 6px 0px;
+    line-height: 1.10;
+    vertical-align: top;
+  }
+
+  table.data-table td.label{
+    width: 36%;
+    text-align: right;
+    padding-right: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  table.data-table td.value{
+    width: 64%;
+    text-align: left;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  tr.sat-row-top td{
+    padding-top: 6px;
+  }
+
+  .sat-row-top td{
+    padding-bottom: 16px !important;
+  }
+}

@@ -1,0 +1,249 @@
+/* ========== FUENTE GLOBAL ========== */
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    background: #f8f7f6;
+    color: #4a4a4a;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* RESET */
+* {
+    box-sizing: border-box;
+}
+
+/* ========== CONTENEDOR GENERAL ========== */
+.page-wrapper {
+    width: 100%;
+    max-width: none;   /* parecido al ancho de la página del SAT */
+    margin: 8px 0;   /* centra la columna como en la original */
+    padding: 0 16px;
+}
+
+/* ========== BARRA RFC ========== */
+.info-bar {
+    background: linear-gradient(#f8f7f6, #f0ece4);
+    border: 1px solid #b38e5d;
+    border-radius: 6px;
+    padding: 8px 15px;
+    font-size: 16px;
+    margin-bottom: 15px;
+
+    /* Sombra EXACTA como los paneles */
+    box-shadow: 0 3px 3px rgba(179, 142, 93, 0.8);
+}
+
+/* El RFC y el texto de la barra todo al mismo peso */
+.info-bar span,
+.info-bar strong {
+    font-weight: 400;
+}
+
+/* ====== PANELES ESTILO SAT REAL ====== */
+
+/* Contenedor general del panel */
+.panel {
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    box-shadow: 0 3px 3px rgba(179, 142, 93, 0.8);
+}
+
+.panel:first-of-type {
+    margin-top: 0;
+}
+
+/* Título dorado ("Datos de Identificación", etc.) */
+.panel-header {
+    border: 1px solid rgb(179, 142, 93);
+    border-bottom: none;
+    padding: 6px 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 400; /* ellos no la traen TAN bold */
+    color: #3e3e3e;
+    text-shadow: 0 0 0 #ffffff;
+
+    background: rgba(179, 142, 93, 0.05);
+    background-image: linear-gradient(
+        rgba(179, 142, 93, 0.06),
+        rgb(179, 142, 93)
+    );
+}
+
+/* Cuerpo beige */
+.panel-body {
+    border: 1px solid rgb(179, 142, 93);
+    border-top: none;
+    padding: 10px 35px 31px 35px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    color: #333333;
+
+    background: #f9f9f9;
+    background-image: linear-gradient(
+        #f9f9f9,
+        rgba(179, 142, 93, .15)
+    );
+}
+
+/* ========== TABLA DE DATOS ========== */
+table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+}
+
+table.data-table td {
+    padding: 2px 4px;
+    vertical-align: top;
+}
+
+/* Columna de etiquetas (CURP:, Nombre:, etc.) */
+table.data-table tr td.label {
+    width: 230px;              /* ancho fijo, NO porcentaje */
+    font-weight: 550;          /* un poco más marcada */
+    text-align: right;         /* alineadas a la derecha como el SAT */
+    padding-right: 10px;       /* separación corta respecto al valor */
+    white-space: nowrap;
+    letter-spacing: 0.2px;
+}
+
+/* Si quieres, incluso puedes quitar este wrapper, pero lo dejamos neutro */
+td.label .label-text {
+    display: inline;
+}
+
+/* Columna de valores */
+table.data-table tr td.value {
+    color: #555555;
+    font-weight: 400;          /* texto normal */
+    text-align: left;
+}
+
+/* Negritas fuertes del lado derecho (ej. span dentro de la etiqueta) */
+.strong-right {
+    font-weight: 550;
+}
+
+/* ==== AJUSTE SOLO PARA "Características fiscales (vigente)" EN PC ==== */
+@media (min-width: 801px) {
+
+    /* Reducimos el padding interno del panel 3 */
+    .panel:nth-of-type(3) .panel-body {
+        padding-left: 20px;   /* antes 35px */
+        padding-right: 20px;
+    }
+
+    /* Hacemos más angosta la columna de etiquetas SOLO en ese panel */
+    .panel:nth-of-type(3) table.data-table td.label {
+        width: 160px;         /* antes 230px global */
+        padding-right: 8px;   /* un poco menos separación */
+    }
+}
+
+/* ========== AJUSTES PARA MÓVIL / VENTANA ANGOSTA ========== */
+@media (max-width: 800px) {
+    body {
+        font-size: 15.2px;
+    }
+
+    .info-bar,
+    .panel-header,
+    table.data-table {
+        font-size: 15.2px;
+    }
+
+    .panel-body {
+        padding: 10px 16px 16px 16px;
+    }
+
+    table.data-table tr td.label {
+        width: 200px;          /* un poco menos ancho en pantallas chicas */
+        padding-right: 8px;
+        white-space: normal;   /* permite saltar de línea si es MUY largo */
+    }
+}
+
+/* ===== HEADER SAT LOGOS PEGADO ARRIBA SIN LÍNEA ===== */
+.sat-header {
+    width: 100%;
+    background: #f8f7f6;
+    padding: 0;
+    margin: 0 0 50px 0;
+    text-align: center;
+    border: none;
+}
+
+.sat-header img {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+}
+
+/* ===== AJUSTE REAL SAT PARA CELULAR ===== */
+@media (max-width: 768px) {
+
+    body {
+        font-size: 14.5px;
+        padding-bottom: 50px;
+    }
+
+    .page-wrapper {
+        padding: 0 14px;
+    }
+
+    .info-bar,
+    .panel {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .panel-body {
+        padding: 10px 14px 35px 14px;
+    }
+
+    table.data-table {
+        width: 100%;
+        table-layout: fixed;
+        font-size: 14.5px;
+    }
+
+    /* 🔥 ESTO ES LO QUE TE FALTABA (CENTRADO VERTICAL REAL) */
+    table.data-table tr {
+        display: flex;
+        align-items: center;   /* ← CENTRA VERTICALMENTE COMO EL SAT */
+    }
+
+    table.data-table td {
+        display: block;
+        padding: 6px 6px;      /* un poco más de aire como el original */
+        line-height: 1.10;
+    }
+
+    /* COLUMNA ETIQUETAS */
+    table.data-table td.label {
+        width: 42%;
+        text-align: right;
+        padding-right: 8px;
+        white-space: normal;
+        font-weight: 600;
+    }
+
+    /* COLUMNA VALORES */
+    table.data-table td.value {
+        width: 58%;
+        text-align: left;
+        font-weight: 400;
+
+        white-space: normal;
+        word-break: break-word;     /* deja que el último dígito baje */
+        overflow-wrap: break-word;
+    }
+}

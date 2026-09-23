@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Validador QR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- TU NUEVO CSS -->
+  <link rel="stylesheet" href="/css/sat-like.css">
+</head>
+<body>
+
+  <!-- HEADER SAT -->
+  <div class="sat-header">
+    <img src="/img/header-sat.png" alt="Hacienda SAT">
+  </div>
+
+  <div class="page-wrapper">
+
+    <!-- TARJETA CENTRAL (como en el SAT) -->
+    <div class="sat-card-wrap">
+      <div class="sat-card">
+        <div class="sat-card-inner">
+        La Constancia de Situación Fiscal que verificó fue emitida por el Servicio de Administración Tributaria
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL: DATOS GENERALES -->
+    <section class="panel">
+      <div class="panel-header">Datos Generales</div>
+      <div class="panel-body sat-body-tight">
+
+        <table class="data-table sat-table-simple">
+          <tr>
+            <td class="label"><span class="strong-right">RFC:</span></td>
+            <td class="value" id="rfc">CASE020722MP6</td>
+          </tr>
+
+          <tr class="sat-row-top">
+            <td class="label"><span class="strong-right">Cadena Original:</span></td>
+            <td class="value sat-wrap" id="cadena_original">||2026/01/23 23:15:37|CASE020722MP6|CONSTANCIA DE SITUACIÓN FISCAL|200001088888800000041|U2FsdGVkX1/u6lyj56lir/HqUsYBpXK66xpeFKg5Qymp/ecS4Xweh/Iv+uVKzCMN||</td>
+          </tr>
+        </table>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- TU SCRIPT ACTUAL AQUÍ -->
+  <script>
+  const qs = new URLSearchParams(location.search);
+  const D1 = (qs.get("D1") || "").trim();
+  const D2 = (qs.get("D2") || "").trim();
+  const D3 = (qs.get("D3") || "").trim();
+
+  const set = (id, v) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = (v == null ? "" : String(v));
+  };
+
+  if (D1 !== "26" || D2 !== "1" || !D3) {
+    document.body.innerHTML = "<h3 style='font-family:Montserrat,sans-serif'>QR inválido</h3>";
+    throw new Error("QR inválido: se requiere D1=26, D2=1 y D3");
+  }
+
+  async function fetchPersona() {
+    // ✅ 1) archivo individual en GitHub (siempre actualizado)
+    const direct = `https://raw.githubusercontent.com/edgcsan77/validacion-sat/main/public/data/personas/${encodeURIComponent(D3)}.json`;
+    let r = await fetch(`${direct}?ts=${Date.now()}`, { cache: "no-store" });
+    if (r.ok) return await r.json();
+
+    // ✅ 2) fallback API (por si aún usas personas.json grande)
+    const api = `/api/validaciones?D1=26&D2=1&D3=${encodeURIComponent(D3)}`;
+    r = await fetch(api, { cache: "no-store" });
+    if (!r.ok) {
+      const t = await r.text().catch(() => "");
+      throw new Error(`No encontrado (HTTP ${r.status}) ${t}`);
+    }
+    const js = await r.json();
+    return js.persona || js;
+  }
+
+  (async () => {
+    try {
+      const persona = await fetchPersona();
+
+      const rfc = (persona.rfc || persona.RFC || persona.RFC_ETIQUETA || "").toString().trim().toUpperCase();
+      const cadena = (persona.cadena_original || persona.CADENA_ORIGINAL || "").toString();
+
+      set("rfc", rfc);
+      set("cadena_original", cadena);
+
+      if (!rfc || !cadena) {
+        console.warn("D26: faltan campos en persona:", persona);
+      }
+    } catch (e) {
+      console.error(e);
+      set("rfc", "");
+      set("cadena_original", "");
+      document.body.insertAdjacentHTML(
+        "beforeend",
+        `<div style="max-width:900px;margin:14px auto;font-family:Montserrat,sans-serif;color:#b91c1c;padding:0 16px">
+          Error al validar QR: ${String(e && e.message ? e.message : e)}
+        </div>`
+      );
+    }
+  })();
+</script>
+
+</body>
+</html>
+

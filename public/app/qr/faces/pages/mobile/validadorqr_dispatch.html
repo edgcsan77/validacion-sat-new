@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Validador QR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+  <div style="font-family:system-ui;padding:16px">Cargando…</div>
+
+  <script>
+    (async () => {
+      const qs = new URLSearchParams(location.search);
+      const D1 = (qs.get("D1") || "").trim();
+      const D2 = (qs.get("D2") || "").trim();
+      const D3 = (qs.get("D3") || "").trim();
+
+      // Validación básica (para no tronar)
+      if (!D3 || D2 !== "1" || (D1 !== "10" && D1 !== "26")) {
+        document.body.innerHTML = "<h3 style='font-family:system-ui'>QR inválido</h3>";
+        return;
+      }
+
+      // ✅ Elegir la vista PERO SIN cambiar URL
+      const page = (D1 === "26")
+        ? "/app/qr/faces/pages/mobile/validadorqr_sat_like.html"
+        : "/app/qr/faces/pages/mobile/validadorqr.html";
+
+      const r = await fetch(page, { cache: "no-store" });
+      if (!r.ok) throw new Error("No pude cargar vista: " + page + " (HTTP " + r.status + ")");
+      const html = await r.text();
+
+      const doc = new DOMParser().parseFromString(html, "text/html");
+
+      // Copia el head (CSS, fonts, meta)
+      document.head.innerHTML = doc.head.innerHTML;
+
+      // Copia body
+      document.body.innerHTML = doc.body.innerHTML;
+
+      // ⚠️ Ejecutar scripts embebidos (porque innerHTML no los ejecuta)
+      const scripts = Array.from(doc.querySelectorAll("script"));
+      for (const s of scripts) {
+        const ns = document.createElement("script");
+        for (const a of s.attributes) ns.setAttribute(a.name, a.value);
+        ns.text = s.textContent || "";
+        document.body.appendChild(ns);
+      }
+    })().catch((e) => {
+      console.error(e);
+      document.body.innerHTML =
+        "<h3 style='font-family:system-ui'>Error cargando validador</h3>" +
+        "<div style='font-family:system-ui;color:#b91c1c;padding:0 16px'>" +
+        String(e && e.message ? e.message : e) +
+        "</div>";
+    });
+  </script>
+</body>
+</html>

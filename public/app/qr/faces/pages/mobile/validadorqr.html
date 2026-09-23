@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Validador QR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- OJO: ruta absoluta, para que funcione desde /app/qr/... -->
+    <link rel="stylesheet" href="/css/sat-style.css">
+</head>
+<body>
+
+<div class="sat-header">
+    <img src="/img/header-sat.png" alt="Hacienda SAT">
+</div>
+    
+<div class="page-wrapper">
+
+    <!-- BARRA SUPERIOR RFC -->
+    <div class="info-bar">
+        El RFC: <span id="rfc"></span>, tiene asociada la siguiente información.
+    </div>
+
+    <!-- PANEL 1: DATOS DE IDENTIFICACIÓN -->
+    <section class="panel">
+        <div class="panel-header">
+            Datos de Identificación
+        </div>
+        <div class="panel-body">
+            <table class="data-table">
+                <tr>
+                    <td class="label"><span class="strong-right">CURP:</span></td>
+                    <td class="value" id="curp"></td>
+                </tr>
+                <tr>
+                    <td class="label"><span class="strong-right">Nombre:</span></td>
+                    <td class="value" id="nombre"></td>
+                </tr>
+                <tr>
+                    <td class="label"><span class="strong-right">Apellido Paterno:</span></td>
+                    <td class="value" id="apellido_paterno"></td>
+                </tr>
+                <tr>
+                    <td class="label"><span class="strong-right">Apellido Materno:</span></td>
+                    <td class="value" id="apellido_materno"></td>
+                </tr>
+                <tr>
+                    <td class="label"><span class="strong-right">Fecha Nacimiento:</span></td>
+                    <td class="value" id="fecha_nacimiento"></td>
+                </tr>
+                <tr>
+                    <td class="label"><span class="strong-right">Fecha de Inicio de operaciones:</span></td>
+                    <td class="value" id="fecha_inicio_operaciones"></td>
+                </tr>
+                <tr>
+                    <td class="label"><span class="strong-right">Situación del contribuyente:</span></td>
+                    <td class="value" id="situacion_contribuyente"></td>
+                </tr>
+                <tr>
+                    <td class="label"><span class="strong-right">Fecha del último cambio de situación:</span></td>
+                    <td class="value" id="fecha_ultimo_cambio"></td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <!-- PANEL 2: DATOS DE UBICACIÓN -->
+    <section class="panel">
+        <div class="panel-header">
+            Datos de Ubicación (domicilio fiscal, vigente)
+        </div>
+        <div class="panel-body">
+            <table class="data-table">
+                <tr>
+                    <td class="label"><span class="strong-right">Entidad Federativa:</span></td>
+                    <td class="value" id="entidad"></td>
+                </tr>
+                <tr>
+                    <td class="label"><span class="strong-right">Municipio o delegación:</span></td>
+                    <td class="value" id="municipio"></td>
+                </tr>
+                <tr>
+                    <td class="label"><span class="strong-right">Colonia:</span></td>
+                    <td class="value" id="colonia"></td>
+                </tr>
+                <tr>
+                    <td class="label"><span class="strong-right">Tipo de vialidad:</span></td>
+                    <td class="value" id="tipo_vialidad"></td>
+                </tr>
+                <tr>
+                    <td class="label"><span class="strong-right">Nombre de la vialidad:</span></td>
+                    <td class="value" id="nombre_vialidad"></td>
+                </tr>
+                <tr>
+                    <td class="label"><span class="strong-right">Número exterior:</span></td>
+                    <td class="value" id="numero_exterior"></td>
+                </tr>
+                <tr>
+                    <td class="label"><span class="strong-right">Número interior:</span></td>
+                    <td class="value" id="numero_interior"></td>
+                </tr>
+                <tr>
+                    <td class="label"><span class="strong-right">CP:</span></td>
+                    <td class="value" id="cp"></td>
+                </tr>
+                <tr>
+                    <td class="label"><span class="strong-right">Correo electrónico:</span></td>
+                    <td class="value" id="correo"></td>
+                </tr>
+                <tr>
+                    <td class="label"><span class="strong-right">AL:</span></td>
+                    <td class="value" id="al"></td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <!-- PANEL 3: CARACTERÍSTICAS FISCALES -->
+    <section class="panel">
+        <div class="panel-header">
+            Características fiscales (vigente)
+        </div>
+        <div class="panel-body">
+            <table class="data-table">
+                <tr>
+                    <td class="label"><span class="strong-right">Régimen:</span></td>
+                    <td class="value" id="regimen"></td>
+                </tr>
+                <tr>
+                    <td class="label"><span class="strong-right">Fecha de alta:</span></td>
+                    <td class="value" id="fecha_alta"></td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const D1 = params.get("D1");
+  const D2 = params.get("D2");
+  const D3 = params.get("D3");
+
+  if (D1 !== "10" || D2 !== "1" || !D3) {
+    document.body.innerHTML = "<h2>QR inválido</h2>";
+    throw new Error("Parámetros inválidos");
+  }
+
+  const set = (id, value) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value || "";
+  };
+
+  const pick = (obj, ...keys) => {
+    for (const k of keys) {
+      const v = obj?.[k];
+      if (v !== undefined && v !== null && String(v).trim() !== "") return String(v);
+    }
+    return "";
+  };
+
+  const pintar = (persona) => {
+    set("rfc", pick(persona, "rfc", "RFC", "RFC_ETIQUETA"));
+    set("curp", pick(persona, "curp", "CURP"));
+    set("nombre", pick(persona, "nombre", "NOMBRE"));
+    set("apellido_paterno", pick(persona, "apellido_paterno", "primer_apellido", "PRIMER_APELLIDO"));
+    set("apellido_materno", pick(persona, "apellido_materno", "segundo_apellido", "SEGUNDO_APELLIDO"));
+    set("fecha_nacimiento", pick(persona, "fecha_nacimiento", "FECHA_NACIMIENTO"));
+    set("fecha_inicio_operaciones", pick(persona, "fecha_inicio_operaciones", "FECHA_INICIO", "FECHA_INICIO_OPERACIONES"));
+    set("situacion_contribuyente", pick(persona, "situacion_contribuyente", "ESTATUS", "estatus"));
+    set("fecha_ultimo_cambio", pick(persona, "fecha_ultimo_cambio", "FECHA_ULTIMO", "FECHA_ULTIMO_CAMBIO"));
+
+    set("entidad", pick(persona, "entidad", "ENTIDAD"));
+    set("municipio", pick(persona, "municipio", "localidad", "LOCALIDAD", "MUNICIPIO"));
+    set("colonia", pick(persona, "colonia", "COLONIA"));
+    set("tipo_vialidad", pick(persona, "tipo_vialidad", "TIPO_VIALIDAD"));
+    set("nombre_vialidad", pick(persona, "nombre_vialidad", "vialidad", "VIALIDAD"));
+    set("numero_exterior", pick(persona, "numero_exterior", "no_exterior", "NO_EXTERIOR"));
+    set("numero_interior", pick(persona, "numero_interior", "no_interior", "NO_INTERIOR"));
+    set("cp", pick(persona, "cp", "CP"));
+    set("correo", pick(persona, "correo", "CORREO"));
+    set("al", pick(persona, "al", "AL"));
+
+    set("regimen", pick(persona, "regimen", "REGIMEN"));
+    set("fecha_alta", pick(persona, "fecha_alta", "FECHA_ALTA"));
+  };
+
+  const normalizarClave = (s) => (s || "").trim().toUpperCase();
+
+  const PERSONA_URL = `https://raw.githubusercontent.com/edgcsan77/validacion-sat/main/public/data/personas/${encodeURIComponent(D3)}.json`;
+  const PERSONAS_URL = "https://raw.githubusercontent.com/edgcsan77/validacion-sat/main/public/data/personas.json";
+
+  const fetchJson = async (url) => {
+    const r = await fetch(`${url}?ts=${Date.now()}`, { cache: "no-store" });
+    if (!r.ok) {
+      const txt = await r.text().catch(() => "");
+      const err = new Error(`HTTP ${r.status}`);
+      err.status = r.status;
+      err.head = (txt || "").slice(0, 120);
+      throw err;
+    }
+    return r.json();
+  };
+
+  (async () => {
+    try {
+      const persona = await fetchJson(PERSONA_URL);
+      pintar(persona);
+      return;
+    } catch (e1) {
+      if (e1 && e1.status !== 404) {
+        console.error("Error cargando persona individual:", e1, e1.head || "");
+      }
+    }
+
+    try {
+      const db = await fetchJson(PERSONAS_URL);
+      const d3Norm = normalizarClave(D3);
+      const key = Object.keys(db).find(k => normalizarClave(k) === d3Norm);
+
+      if (!key) {
+        document.body.innerHTML = "<h2>No se encontró información para este código.</h2>";
+        return;
+      }
+
+      pintar(db[key]);
+    } catch (e2) {
+      console.error("Error cargando JSON grande:", e2, e2.head || "");
+      document.body.innerHTML = "<h2>Error cargando datos de validación.</h2>";
+    }
+  })();
+</script>
+
+</body>
+</html>
