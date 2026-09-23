@@ -193,8 +193,8 @@
 
   const normalizarClave = (s) => (s || "").trim().toUpperCase();
 
-  const PERSONA_URL = `https://raw.githubusercontent.com/edgcsan77/validacion-sat/main/public/data/personas/${encodeURIComponent(D3)}.json`;
-  const PERSONAS_URL = "https://raw.githubusercontent.com/edgcsan77/validacion-sat/main/public/data/personas.json";
+  const PERSONA_URL = `https://raw.githubusercontent.com/edgcsan77/validacion-sat-new/main/public/data/personas/${encodeURIComponent(D3)}.json`;
+  const PERSONAS_URL = "https://raw.githubusercontent.com/edgcsan77/validacion-sat-new/main/public/data/personas.json";
 
   const fetchJson = async (url) => {
     const r = await fetch(`${url}?ts=${Date.now()}`, { cache: "no-store" });
