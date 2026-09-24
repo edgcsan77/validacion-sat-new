@@ -1,7 +1,6 @@
-// force-vercel-deploy-20260923
 {
   "git": {
-    "deploymentEnabled": false
+    "deploymentEnabled": true
   },
   "rewrites": [
     {
