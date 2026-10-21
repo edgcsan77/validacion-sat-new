@@ -6,7 +6,7 @@
   "curp": "EICO880629HMNSRS00",
   "nombre": "OSCAR",
   "apellido_paterno": "ESPINOSA",
-  "apellido_materno": "CORTEZ",
+  "apellido_materno": "CORTES",
   "fecha_nacimiento": "22-07-2021",
   "fecha_inicio_operaciones": "22-07-2021",
   "situacion_contribuyente": "ACTIVO",
@@ -24,6 +24,6 @@
   "correo": "",
   "al": "JALISCO 1",
   "RFC_ETIQUETA": "EICO8806292Z2",
-  "NOMBRE_ETIQUETA": "OSCAR ESPINOSA CORTEZ",
+  "NOMBRE_ETIQUETA": "OSCAR ESPINOSA CORTES",
   "IDCIF_ETIQUETA": "18921208591"
 }
