@@ -18,11 +18,11 @@
   "colonia": "BELLAVISTA",
   "tipo_vialidad": "CALLE",
   "nombre_vialidad": "VELAZQUEZ MORA",
-  "numero_exterior": "SIN NUMERO",
+  "numero_exterior": "",
   "numero_interior": "",
   "cp": "60870",
   "correo": "",
-  "al": "MICHOACAN DE OCAMPO 1",
+  "al": "MICHOACAN 1",
   "RFC_ETIQUETA": "DIMA821121SD2",
   "NOMBRE_ETIQUETA": "AUSTREBERTO DIAZ MARTINEZ",
   "IDCIF_ETIQUETA": "27547714480"
