@@ -18,7 +18,7 @@
   "colonia": "MIRAMAR",
   "tipo_vialidad": "CALLE",
   "nombre_vialidad": "PUERTO",
-  "numero_exterior": "SIN NUMERO",
+  "numero_exterior": "",
   "numero_interior": "",
   "cp": "45060",
   "correo": "",
